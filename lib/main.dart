@@ -19,35 +19,64 @@ class MyAppState extends State<MyApp> {
     {
       'questionText': 'Cual es el máximo anotador de todos los tiempos?',
       'answers': [
-        'Kareem Abdul Jabbar',
-        'Michael Jordan',
-        'LeBron James',
-        'Kobe Bryant',
+        {'text': 'Kareem Abdul Jabbar', 'score': 0},
+        {'text': 'Michael Jordan', 'score': 0},
+        {'text': 'LeBron James', 'score': 1},
+        {'text': 'Kobe Bryant', 'score': 0},
       ],
     },
     {
       'questionText': 'Cuál de estos jugadores es más alto?',
       'answers': [
-        'Yao Ming',
-        'Boban Marjanovic',
-        'Manute Bol',
-        'Ralph Sampson',
+        {'text': 'Yao Ming', 'score': 0},
+        {'text': 'Boban Marjanovic', 'score': 0},
+        {'text': 'Manute Bol', 'score': 1},
+        {'text': 'Ralph Sampson', 'score': 0},
       ],
     },
     {
       'questionText': 'Cuál de estos equipos tiene más campeonatos?',
       'answers': [
-        'Miami Heat',
-        'Houston Rockets',
-        'Milwaukee Bucks',
-        'Tienen los mismos campeonatos',
+        {'text': 'Miami Heat', 'score': 1},
+        {'text': 'Houston Rockets', 'score': 0},
+        {'text': 'Milwaukee Bucks', 'score': 0},
+        {'text': 'Tienen los mismos campeonatos', 'score': 0},
+      ],
+    },
+    {
+      'questionText': 'Que jugador metió más triples en un partido?',
+      'answers': [
+        {'text': 'Stephen Curry', 'score': 0},
+        {'text': 'Ray Allen', 'score': 0},
+        {'text': 'Klay Thompson', 'score': 1},
+        {'text': 'Reggie Miller', 'score': 0},
+      ],
+    },
+    {
+      'questionText':
+          'Quién es el líder en tiros libres anotados en una temporada?',
+      'answers': [
+        {'text': 'Jerry West', 'score': 1},
+        {'text': 'Stephen Curry', 'score': 0},
+        {'text': 'Michael Jordan', 'score': 0},
+        {'text': 'James Harden', 'score': 0},
       ],
     },
   ];
 
   var _questionIndex = 0;
+  var _totalScore = 0;
 
-  void _answerQuestion() {
+  void _resetQuiz() {
+    setState(() {
+      _questionIndex = 0;
+      _totalScore = 0;
+    });
+  }
+
+  void _answerQuestion(int score) {
+    _totalScore += score;
+
     setState(() {
       _questionIndex = _questionIndex + 1;
     });
@@ -69,7 +98,7 @@ class MyAppState extends State<MyApp> {
                 answerQuestion: _answerQuestion,
                 questionIndex: _questionIndex,
                 questions: _questions)
-            : Result(),
+            : Result(_totalScore, _resetQuiz),
       ),
     );
   }
